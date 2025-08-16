@@ -1,9 +1,13 @@
 const express = require('express');
+const wechatRouter = require('./wechat-login');
 const app = express();
 
 // 中间件
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// 集成微信登录路由
+app.use('/api/wechat', wechatRouter);
 
 // 路由
 app.get('/', (req, res) => {

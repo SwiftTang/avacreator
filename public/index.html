@@ -65,13 +65,58 @@
         <div id="loginModal" class="modal" style="display:none;">
             <div class="modal-content">
                 <span class="close" onclick="hideLogin()">&times;</span>
-                <h3>微信登录</h3>
-                <div class="wechat-login">
+                <div class="auth-tabs">
+                    <button class="tab-btn active" onclick="showLoginTab()">登录</button>
+                    <button class="tab-btn" onclick="showRegisterTab()">注册</button>
+                </div>
+                
+                <!-- 登录表单 -->
+                <div id="loginForm" class="auth-form">
+                    <h3>用户登录</h3>
+                    <form onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <input type="text" id="loginUsername" placeholder="用户名/邮箱" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="loginPassword" placeholder="密码" required>
+                        </div>
+                        <button type="submit" class="auth-btn">登录</button>
+                    </form>
+                    <div class="auth-divider">
+                        <span>或</span>
+                    </div>
+                    <button class="wechat-btn" onclick="showWechatLogin()">
+                        <span class="wechat-icon">💬</span>
+                        微信登录
+                    </button>
+                </div>
+                
+                <!-- 注册表单 -->
+                <div id="registerForm" class="auth-form" style="display:none;">
+                    <h3>用户注册</h3>
+                    <form onsubmit="handleRegister(event)">
+                        <div class="form-group">
+                            <input type="text" id="registerUsername" placeholder="用户名" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="registerPassword" placeholder="密码" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="confirmPassword" placeholder="确认密码" required>
+                        </div>
+                        <button type="submit" class="auth-btn">注册</button>
+                    </form>
+                </div>
+                
+                <!-- 微信登录 -->
+                <div id="wechatLogin" class="wechat-login" style="display:none;">
+                    <h3>微信登录</h3>
                     <div class="qr-placeholder">
                         <div class="qr-code">📱</div>
                         <p>请使用微信扫码登录</p>
                         <button onclick="mockLogin()">模拟登录（开发模式）</button>
                     </div>
+                    <button class="back-btn" onclick="backToLogin()">返回登录</button>
                 </div>
             </div>
         </div>

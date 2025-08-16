@@ -27,11 +27,143 @@ function initApp() {
 // 显示登录弹窗
 function showLogin() {
     document.getElementById('loginModal').style.display = 'block';
+    showLoginTab(); // 默认显示登录表单
 }
 
 // 隐藏登录弹窗
 function hideLogin() {
     document.getElementById('loginModal').style.display = 'none';
+    // 重置表单
+    const loginForm = document.querySelector('#loginForm form');
+    const registerForm = document.querySelector('#registerForm form');
+    if (loginForm) loginForm.reset();
+    if (registerForm) registerForm.reset();
+}
+
+// 显示登录标签页
+function showLoginTab() {
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('wechatLogin').style.display = 'none';
+    
+    // 更新标签按钮状态
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-btn')[0].classList.add('active');
+}
+
+// 显示注册标签页
+function showRegisterTab() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'block';
+    document.getElementById('wechatLogin').style.display = 'none';
+    
+    // 更新标签按钮状态
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-btn')[1].classList.add('active');
+}
+
+// 显示微信登录
+function showWechatLogin() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('wechatLogin').style.display = 'block';
+}
+
+// 返回登录表单
+function backToLogin() {
+    showLoginTab();
+}
+
+// 处理登录表单提交
+function handleLogin(event) {
+    event.preventDefault();
+    
+    const username = document.getElementById('loginUsername').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    // 简单验证
+    if (!username || !password) {
+        alert('请填写完整的登录信息');
+        return;
+    }
+    
+    // 模拟登录请求
+    console.log('登录请求:', { username, password });
+    
+    // 模拟成功登录
+    const userData = {
+        id: Date.now(),
+        username: username,
+        email: username.includes('@') ? username : `${username}@example.com`,
+        loginTime: new Date().toISOString(),
+        points: 100,
+        level: 1,
+        completedTasks: 0
+    };
+    
+    // 保存用户数据
+    localStorage.setItem('userData', JSON.stringify(userData));
+    
+    // 更新UI
+    updateUserInterface(userData);
+    hideLogin();
+    
+    alert('登录成功！');
+}
+
+// 处理注册表单提交
+function handleRegister(event) {
+    event.preventDefault();
+    
+    const username = document.getElementById('registerUsername').value;
+    const password = document.getElementById('registerPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    
+    // 验证表单
+    if (!username || !password || !confirmPassword) {
+        alert('请填写完整的注册信息');
+        return;
+    }
+    
+    if (password !== confirmPassword) {
+        alert('两次输入的密码不一致');
+        return;
+    }
+    
+    if (password.length < 6) {
+        alert('密码长度至少6位');
+        return;
+    }
+    
+    // 模拟注册请求
+    console.log('注册请求:', { username, password });
+    
+    // 模拟成功注册
+    const userData = {
+        id: Date.now(),
+        username: username,
+        registerTime: new Date().toISOString(),
+        points: 50, // 新用户奖励积分
+        level: 1,
+        completedTasks: 0
+    };
+    
+    // 保存用户数据
+    localStorage.setItem('userData', JSON.stringify(userData));
+    
+    // 更新UI
+    updateUserInterface(userData);
+    hideLogin();
+    
+    alert('注册成功！获得新用户奖励积分50分');
+}
+
+// 更新用户界面
+function updateUserInterface(userData) {
+    // 隐藏登录按钮，显示用户按钮
+    document.getElementById('loginBtn').style.display = 'none';
+    document.getElementById('userBtn').style.display = 'inline-block';
+    document.getElementById('userBtn').textContent = `${userData.username}`;
 }
 
 // 显示用户中心
