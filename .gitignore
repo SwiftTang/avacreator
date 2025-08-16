@@ -44,3 +44,10 @@ Thumbs.db
 
 # 腾讯云相关
 .tcb_custom_login
+
+# 敏感配置文件
+SecretKey.csv
+*.csv
+.env
+.env.*
+!.env.example
