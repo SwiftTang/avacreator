@@ -3,130 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>腾讯云开发项目</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: white;
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-        }
-        .feature {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 10px;
-            border-left: 4px solid #00d4aa;
-        }
-        button {
-            background: #00d4aa;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 10px 5px;
-            transition: all 0.3s ease;
-        }
-        button:hover {
-            background: #00b894;
-            transform: translateY(-2px);
-        }
-        .result {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            font-family: monospace;
-        }
-    </style>
+    <title>AVACreator - 极速协同创新平台</title>
+    <meta name="description" content="AVACreator极速协同创新平台，共创、共享、共发展">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>🚀 腾讯云开发项目</h1>
-        
-        <div class="feature">
-            <h3>📡 API 测试</h3>
-            <p>测试云函数接口</p>
-            <button onclick="testAPI()">测试 Hello API</button>
-            <button onclick="testPost()">测试 POST API</button>
-            <div id="apiResult" class="result" style="display:none;"></div>
+        <!-- 头部导航 -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>🚀 AVACreator</h1>
+                <span class="tagline">极速协同创新平台</span>
+            </div>
+            <div class="nav-menu">
+                <button id="loginBtn" onclick="showLogin()">微信登录</button>
+                <button id="userBtn" onclick="showUserCenter()" style="display:none;">用户中心</button>
+            </div>
+        </nav>
+
+        <!-- 主要内容 -->
+        <div class="hero-section">
+            <h2>共创、共享、共发展</h2>
+            <p class="hero-description">
+                AVACreator是新一代极速协同创新平台，汇聚全球创意人才，打造在线协作生态。
+                我们为创意工作者、设计师、开发者、产品经理和投资人提供无缝协作环境，
+                让每个人都能在这里发挥专长、实现价值、获得收益。
+                通过智能匹配、任务协作、技能认证和积分激励，
+                我们正在重新定义创新协作的未来，让好创意快速变成现实。
+            </p>
+            <div class="cta-buttons">
+                <button class="btn-primary" onclick="showLogin()">立即加入</button>
+                <button class="btn-secondary" onclick="scrollToFeatures()">了解更多</button>
+            </div>
         </div>
 
-        <div class="feature">
-            <h3>💾 项目特性</h3>
-            <ul>
-                <li>✅ 支持一键部署到腾讯云开发</li>
-                <li>✅ 自动读取 CSV 配置文件</li>
-                <li>✅ Express 云函数支持</li>
-                <li>✅ 静态网站托管</li>
-                <li>✅ 环境变量自动配置</li>
-            </ul>
+        <!-- 特色功能 -->
+        <div id="features" class="features-section">
+            <div class="feature-card">
+                <div class="feature-icon">💡</div>
+                <h3>创意孵化</h3>
+                <p>提交创意想法，获得专业评估和孵化支持</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>设计协作</h3>
+                <p>UI/UX设计师在线协作，快速产出优质设计</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>敏捷开发</h3>
+                <p>技术专家团队，快速实现产品原型和MVP</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>价值变现</h3>
+                <p>完成任务获得积分，积分可兑换现金收益</p>
+            </div>
         </div>
 
-        <div class="feature">
-            <h3>🛠️ 使用说明</h3>
-            <ol>
-                <li>运行 <code>npm install</code> 安装依赖</li>
-                <li>运行 <code>npm run setup</code> 配置环境</li>
-                <li>运行 <code>npm run deploy</code> 一键部署</li>
-            </ol>
+        <!-- 登录弹窗 -->
+        <div id="loginModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close" onclick="hideLogin()">&times;</span>
+                <h3>微信登录</h3>
+                <div class="wechat-login">
+                    <div class="qr-placeholder">
+                        <div class="qr-code">📱</div>
+                        <p>请使用微信扫码登录</p>
+                        <button onclick="mockLogin()">模拟登录（开发模式）</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 用户中心弹窗 -->
+        <div id="userModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close" onclick="hideUserCenter()">&times;</span>
+                <h3>用户中心</h3>
+                <div id="userInfo" class="user-info">
+                    <!-- 用户信息将通过JavaScript动态加载 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- API测试区域（开发者功能） -->
+        <div class="dev-section" style="margin-top: 50px;">
+            <h3>🔧 开发者工具</h3>
+            <div class="feature">
+                <button onclick="testAPI()">测试 API</button>
+                <button onclick="testUserAPI()">测试用户API</button>
+                <div id="apiResult" class="result" style="display:none;"></div>
+            </div>
         </div>
     </div>
 
-    <script>
-        async function testAPI() {
-            const result = document.getElementById('apiResult');
-            result.style.display = 'block';
-            result.innerHTML = '请求中...';
-            
-            try {
-                const response = await fetch('/api/hello?name=测试用户');
-                const data = await response.json();
-                result.innerHTML = JSON.stringify(data, null, 2);
-            } catch (error) {
-                result.innerHTML = '错误: ' + error.message;
-            }
-        }
-
-        async function testPost() {
-            const result = document.getElementById('apiResult');
-            result.style.display = 'block';
-            result.innerHTML = '请求中...';
-            
-            try {
-                const response = await fetch('/api/data', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        message: '这是一个测试消息',
-                        timestamp: new Date().toISOString()
-                    })
-                });
-                const data = await response.json();
-                result.innerHTML = JSON.stringify(data, null, 2);
-            } catch (error) {
-                result.innerHTML = '错误: ' + error.message;
-            }
-        }
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
