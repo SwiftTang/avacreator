@@ -164,6 +164,11 @@ function updateUserInterface(userData) {
     document.getElementById('loginBtn').style.display = 'none';
     document.getElementById('userBtn').style.display = 'inline-block';
     document.getElementById('userBtn').textContent = `${userData.username}`;
+    
+    // 登录成功后跳转到仪表板
+    setTimeout(() => {
+        window.location.href = '/dashboard';
+    }, 1000);
 }
 
 // 显示用户中心

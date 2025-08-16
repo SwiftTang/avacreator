@@ -4,10 +4,16 @@
   "description": "一键部署到腾讯云开发的项目",
   "main": "index.js",
   "scripts": {
-    "dev": "node server.js",
+    "start": "node start.js",
+    "server": "node server.js",
+    "dev": "node start.js",
     "build": "echo '构建完成'",
     "deploy": "node deploy.js",
-    "setup": "node setup.js"
+    "setup": "node setup.js",
+    "rollback": "node rollback.js",
+    "rollback:1.01": "node rollback.js 1.01",
+    "rollback:1.00": "node rollback.js 1.00",
+    "versions": "node rollback.js"
   },
   "dependencies": {
     "@cloudbase/cli": "^1.9.18",

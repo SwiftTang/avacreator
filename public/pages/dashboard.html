@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工作台 - AVACreator</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 头部导航 -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="logo">
+                    <h1>🚀 AVACreator</h1>
+                    <span class="tagline">极速协同创新平台</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="notifications">
+                    <button class="notification-btn" onclick="showNotifications()">
+                        <span class="icon">🔔</span>
+                        <span class="badge" id="notificationCount">3</span>
+                    </button>
+                </div>
+                <div class="user-menu">
+                    <button class="user-btn" onclick="toggleUserMenu()">
+                        <span class="avatar">👤</span>
+                        <span class="username" id="currentUsername">用户名</span>
+                        <span class="role-badge" id="userRole">角色</span>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="/profile">个人中心</a>
+                        <a href="/settings">设置</a>
+                        <hr>
+                        <a href="#" onclick="logout()">退出登录</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <!-- 侧边栏导航 -->
+            <aside class="sidebar">
+                <nav class="main-nav">
+                    <div class="nav-section">
+                        <h3>主要功能</h3>
+                        <ul class="nav-list">
+                            <li><a href="/dashboard" class="nav-item active">
+                                <span class="icon">🏠</span>工作台
+                            </a></li>
+                            <li><a href="/events" class="nav-item">
+                                <span class="icon">📅</span>事件中心
+                            </a></li>
+                            <li><a href="/profile" class="nav-item">
+                                <span class="icon">👤</span>个人中心
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="nav-section" id="roleNavSection">
+                        <!-- 角色相关导航将通过JavaScript动态加载 -->
+                    </div>
+                </nav>
+            </aside>
+
+            <!-- 主内容区 -->
+            <main class="main-content">
+                <div class="page-header">
+                    <h2>工作台</h2>
+                    <p class="page-description">欢迎回来，这里是您的个人工作台</p>
+                </div>
+
+                <!-- 仪表板内容 -->
+                <div class="dashboard-content" id="dashboardContent">
+                    <!-- 内容将根据用户角色动态加载 -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 通知弹窗 -->
+    <div id="notificationModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="hideNotifications()">&times;</span>
+            <h3>通知中心</h3>
+            <div id="notificationList" class="notification-list">
+                <!-- 通知列表 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/common.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>
