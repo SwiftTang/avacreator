@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>腾讯云开发项目</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #00d4aa;
+        }
+        button {
+            background: #00d4aa;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #00b894;
+            transform: translateY(-2px);
+        }
+        .result {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 腾讯云开发项目</h1>
+        
+        <div class="feature">
+            <h3>📡 API 测试</h3>
+            <p>测试云函数接口</p>
+            <button onclick="testAPI()">测试 Hello API</button>
+            <button onclick="testPost()">测试 POST API</button>
+            <div id="apiResult" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="feature">
+            <h3>💾 项目特性</h3>
+            <ul>
+                <li>✅ 支持一键部署到腾讯云开发</li>
+                <li>✅ 自动读取 CSV 配置文件</li>
+                <li>✅ Express 云函数支持</li>
+                <li>✅ 静态网站托管</li>
+                <li>✅ 环境变量自动配置</li>
+            </ul>
+        </div>
+
+        <div class="feature">
+            <h3>🛠️ 使用说明</h3>
+            <ol>
+                <li>运行 <code>npm install</code> 安装依赖</li>
+                <li>运行 <code>npm run setup</code> 配置环境</li>
+                <li>运行 <code>npm run deploy</code> 一键部署</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        async function testAPI() {
+            const result = document.getElementById('apiResult');
+            result.style.display = 'block';
+            result.innerHTML = '请求中...';
+            
+            try {
+                const response = await fetch('/api/hello?name=测试用户');
+                const data = await response.json();
+                result.innerHTML = JSON.stringify(data, null, 2);
+            } catch (error) {
+                result.innerHTML = '错误: ' + error.message;
+            }
+        }
+
+        async function testPost() {
+            const result = document.getElementById('apiResult');
+            result.style.display = 'block';
+            result.innerHTML = '请求中...';
+            
+            try {
+                const response = await fetch('/api/data', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: '这是一个测试消息',
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                const data = await response.json();
+                result.innerHTML = JSON.stringify(data, null, 2);
+            } catch (error) {
+                result.innerHTML = '错误: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

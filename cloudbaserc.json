@@ -1,0 +1,21 @@
+{
+  "envId": "cloud1-8gl7lf0r7e4d6091",
+  "functionRoot": "./functions",
+  "functions": [
+    {
+      "name": "app",
+      "timeout": 5,
+      "envVariables": {},
+      "runtime": "Nodejs16.13",
+      "memorySize": 128,
+      "handler": "index.main"
+    }
+  ],
+  "framework": {
+    "name": "express",
+    "plugins": {}
+  },
+  "hosting": {
+    "root": "./public"
+  }
+}
