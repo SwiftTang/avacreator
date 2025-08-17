@@ -22,6 +22,11 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// 用户中心路由
+app.get('/users', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'pages', 'user-center.html'));
+});
+
 // 其他页面路由（暂时重定向到仪表板，后续实现具体页面）
 const pageRoutes = ['/operations', '/profile', '/events', '/ideas', '/projects', '/tasks', '/products'];
 pageRoutes.forEach(route => {

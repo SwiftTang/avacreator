@@ -67,6 +67,13 @@
                             <div class="tool-status">可用</div>
                         </div>
                         
+                        <div class="tool-item admin-only" onclick="openUserCenter()">
+                            <div class="tool-icon">👥</div>
+                            <h3>用户中心</h3>
+                            <p>管理员专用：用户中心和数据分析</p>
+                            <div class="tool-status">管理员</div>
+                        </div>
+                        
                         <div class="tool-item disabled">
                             <div class="tool-icon">🧪</div>
                             <h3>测试 API</h3>
@@ -144,6 +151,16 @@
             window.open('ideas.html', '_blank');
         }
 
+        function openUserCenter() {
+            // 检查用户权限（这里简化处理，实际应该从后端验证）
+            const isAdmin = localStorage.getItem('userRole') === 'admin' || confirm('请确认您是管理员用户');
+            if (isAdmin) {
+                window.open('user-center.html', '_blank');
+            } else {
+                alert('此工具仅限管理员使用');
+            }
+        }
+
         // 页面加载完成后的初始化
         document.addEventListener('DOMContentLoaded', function() {
             // 添加页面动画
@@ -152,6 +169,15 @@
                 section.style.animationDelay = `${index * 0.1}s`;
                 section.classList.add('fade-in');
             });
+            
+            // 根据用户角色显示/隐藏管理员工具
+            const userRole = localStorage.getItem('userRole');
+            const adminTools = document.querySelectorAll('.admin-only');
+            if (userRole !== 'admin') {
+                adminTools.forEach(tool => {
+                    tool.style.display = 'none';
+                });
+            }
         });
     </script>
 </body>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户中心 - AVACreator</title>
+    <link rel="stylesheet" href="../css/user-center.css?v=2.0">
+    <link rel="stylesheet" href="../css/dashboard.css?v=2.0">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h2>🚀 AVACreator</h2>
+                <p>极速协同创新平台</p>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-item">
+                    <span class="icon">🏠</span>首页
+                </a></li>
+                <li><a href="dashboard.html" class="nav-item">
+                    <span class="icon">📊</span>仪表板
+                </a></li>
+                <li><a href="ideas.html" class="nav-item">
+                    <span class="icon">💡</span>创意中心
+                </a></li>
+                <li><a href="projects.html" class="nav-item">
+                    <span class="icon">📁</span>项目中心
+                </a></li>
+                <li><a href="/users" class="nav-item active">
+                    <span class="icon">👤</span>用户中心
+                </a></li>
+                <li><a href="about.html" class="nav-item">
+                    <span class="icon">ℹ️</span>关于
+                </a></li>
+            </ul>
+        </nav>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1>用户中心</h1>
+                <p>管理您的个人信息和账户设置</p>
+            </header>
+
+            <div class="user-center-container">
+                <!-- 用户信息卡片 -->
+                <div class="user-profile-card">
+                    <div class="profile-header">
+                        <div class="avatar">
+                            <img src="https://via.placeholder.com/80" alt="用户头像" id="userAvatar">
+                        </div>
+                        <div class="user-info">
+                            <h2 id="userName">张三</h2>
+                            <p id="userEmail">zhangsan@example.com</p>
+                            <span class="user-role" id="userRole">普通用户</span>
+                        </div>
+                        <button class="edit-profile-btn" onclick="editProfile()">编辑资料</button>
+                    </div>
+                    
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="ideasCount">12</span>
+                            <span class="stat-label">创意数量</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="projectsCount">5</span>
+                            <span class="stat-label">参与项目</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="pointsCount">850</span>
+                            <span class="stat-label">积分</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 功能菜单 -->
+                <div class="function-grid">
+                    <div class="function-card" onclick="showMyIdeas()">
+                        <div class="function-icon">💡</div>
+                        <h3>我的创意</h3>
+                        <p>查看和管理我发布的创意</p>
+                    </div>
+                    
+                    <div class="function-card" onclick="showMyProjects()">
+                        <div class="function-icon">📁</div>
+                        <h3>我的项目</h3>
+                        <p>查看参与的项目进展</p>
+                    </div>
+                    
+                    <div class="function-card" onclick="showSettings()">
+                        <div class="function-icon">⚙️</div>
+                        <h3>账户设置</h3>
+                        <p>修改密码和个人偏好</p>
+                    </div>
+                    
+                    <div class="function-card" onclick="showNotifications()">
+                        <div class="function-icon">🔔</div>
+                        <h3>消息通知</h3>
+                        <p>查看系统消息和提醒</p>
+                    </div>
+                </div>
+
+                <!-- 最近活动 -->
+                <div class="recent-activity">
+                    <h3>最近活动</h3>
+                    <div class="activity-list" id="activityList">
+                        <div class="activity-item">
+                            <div class="activity-icon">💡</div>
+                            <div class="activity-content">
+                                <p><strong>发布了新创意</strong> "智能家居控制系统"</p>
+                                <span class="activity-time">2小时前</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">📁</div>
+                            <div class="activity-content">
+                                <p><strong>加入了项目</strong> "移动应用开发"</p>
+                                <span class="activity-time">1天前</span>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">⭐</div>
+                            <div class="activity-content">
+                                <p><strong>获得积分奖励</strong> +50积分</p>
+                                <span class="activity-time">3天前</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 编辑资料模态框 -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>编辑个人资料</h3>
+                <span class="close" onclick="closeEditProfile()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="editName">姓名</label>
+                        <input type="text" id="editName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">邮箱</label>
+                        <input type="email" id="editEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPhone">手机号</label>
+                        <input type="tel" id="editPhone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="editBio">个人简介</label>
+                        <textarea id="editBio" name="bio" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeEditProfile()">取消</button>
+                <button type="button" class="btn-primary" onclick="saveProfile()">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/user-center.js"></script>
+</body>
+</html>
