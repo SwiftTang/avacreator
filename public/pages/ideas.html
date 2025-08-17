@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创意中心 - CB005</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../css/ideas.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>CB005 创意中心</h1>
+                <div class="user-info">
+                    <span id="userLevel">普通用户</span>
+                    <span id="userPoints">积分: 0</span>
+                    <button onclick="ideasCenter.toggleUserRole()" class="btn-secondary" style="margin-right: 10px;">切换角色</button>
+                    <button id="logoutBtn" class="btn-secondary">退出</button>
+                </div>
+            </div>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="list">创意中心</button>
+            <button class="tab-btn" data-tab="submit">新建创意</button>
+            <button class="tab-btn" data-tab="guidelines">创意规范</button>
+        </nav>
+
+        <!-- 创意中心主界面 -->
+        <div id="list-tab" class="tab-content active">
+            <div class="ideas-layout">
+                <!-- 左侧创意清单 -->
+                <div class="ideas-sidebar">
+                    <div class="sidebar-header">
+                        <h3>创意清单</h3>
+                        <div class="sidebar-filters">
+                            <select id="sidebarStatusFilter">
+                                <option value="">全部状态</option>
+                                <option value="pending">待审核</option>
+                                <option value="adopted">已采纳</option>
+                                <option value="rejected">未采纳</option>
+                            </select>
+                            <select id="sidebarCategoryFilter">
+                                <option value="">全部类别</option>
+                                <option value="platform">平台优化</option>
+                                <option value="product">产品改进</option>
+                                <option value="user">用户体验</option>
+                                <option value="business">商业模式</option>
+                                <option value="technology">技术创新</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ideas-list-sidebar" id="ideasListSidebar">
+                        <!-- 创意列表将在这里动态加载 -->
+                    </div>
+                </div>
+
+                <!-- 中间详情区域 -->
+                <div class="ideas-main">
+                    <div class="main-header">
+                        <h3>创意详情</h3>
+                    </div>
+                    <div class="idea-detail-content" id="ideaDetailContent">
+                        <div class="empty-detail">
+                            <div class="empty-icon">💡</div>
+                            <h4>选择一个创意查看详情</h4>
+                            <p>从左侧列表中选择创意，在这里查看完整信息</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧评审面板（仅管理员可见） -->
+                <div class="ideas-review admin-only" id="ideasReview" style="display: none;">
+                    <div class="review-header">
+                        <h3>创意评审</h3>
+                    </div>
+                    <div class="review-content" id="reviewContent">
+                        <div class="empty-review">
+                            <div class="empty-icon">⚖️</div>
+                            <h4>选择待审核创意</h4>
+                            <p>选择状态为"待审核"的创意进行评审</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新建创意 -->
+        <div id="submit-tab" class="tab-content">
+            <div class="idea-form-container">
+                <h2>提交新创意</h2>
+                <form id="ideaForm">
+                    <div class="form-group">
+                        <label for="ideaTitle">创意标题 *</label>
+                        <input type="text" id="ideaTitle" required maxlength="100" placeholder="简洁明确的创意标题">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ideaDescription">创意简述 *</label>
+                        <textarea id="ideaDescription" required maxlength="500" rows="4" placeholder="简要描述您的创意内容和价值"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ideaCategory">适用类别</label>
+                        <select id="ideaCategory">
+                            <option value="">请选择</option>
+                            <option value="platform">平台优化</option>
+                            <option value="product">产品改进</option>
+                            <option value="user">用户体验</option>
+                            <option value="business">商业模式</option>
+                            <option value="technology">技术创新</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ideaTags">标签</label>
+                        <input type="text" id="ideaTags" placeholder="用逗号分隔，如：效率,用户体验,创新">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="detailedIdea">
+                            提交详细创意（包含更多信息）
+                        </label>
+                    </div>
+
+                    <div id="detailedFields" style="display: none;">
+                        <div class="form-group">
+                            <label for="targetAudience">目标对象</label>
+                            <textarea id="targetAudience" rows="2" placeholder="描述创意的目标用户或适用对象"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="implementationScope">实施范围</label>
+                            <textarea id="implementationScope" rows="2" placeholder="描述创意的实施范围和影响面"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="expectedValue">预期价值</label>
+                            <textarea id="expectedValue" rows="3" placeholder="详细说明创意能带来的价值和改进"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="references">参考资料</label>
+                            <textarea id="references" rows="2" placeholder="相关参考资料、链接或案例"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="competitorAnalysis">竞品分析</label>
+                            <textarea id="competitorAnalysis" rows="3" placeholder="竞品分析和优化改进建议"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">提交创意</button>
+                        <button type="reset" class="btn-secondary">重置</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 创意规范 -->
+        <div id="guidelines-tab" class="tab-content">
+            <div class="guidelines-container">
+                <h2>创意提交规范与要求</h2>
+                
+                <div class="guideline-section">
+                    <h3>创意价值要求</h3>
+                    <ul>
+                        <li>对用户、行业、产品、项目有显著的改进和优化</li>
+                        <li>能够为平台、产品、项目、用户提升价值</li>
+                        <li>具有可行性和实用性</li>
+                        <li>创新性和独特性</li>
+                    </ul>
+                </div>
+
+                <div class="guideline-section">
+                    <h3>创意类型</h3>
+                    <div class="idea-types">
+                        <div class="type-card">
+                            <h4>极简创意</h4>
+                            <p>仅需提供明确的标题和内容简述，后期可细化</p>
+                        </div>
+                        <div class="type-card">
+                            <h4>详细创意</h4>
+                            <p>包含适用范围、目标对象、标签、参考资料、竞品分析等完整信息</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="guideline-section">
+                    <h3>积分奖励机制</h3>
+                    <div class="points-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>用户等级</th>
+                                    <th>基础积分</th>
+                                    <th>详细创意奖励</th>
+                                    <th>优质创意奖励</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>普通用户</td>
+                                    <td>10分</td>
+                                    <td>+5分</td>
+                                    <td>+10分</td>
+                                </tr>
+                                <tr>
+                                    <td>活跃用户</td>
+                                    <td>15分</td>
+                                    <td>+8分</td>
+                                    <td>+15分</td>
+                                </tr>
+                                <tr>
+                                    <td>核心用户</td>
+                                    <td>20分</td>
+                                    <td>+10分</td>
+                                    <td>+20分</td>
+                                </tr>
+                                <tr>
+                                    <td>管理员</td>
+                                    <td>25分</td>
+                                    <td>+12分</td>
+                                    <td>+25分</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="guideline-section">
+                    <h3>审核流程</h3>
+                    <ol>
+                        <li>用户提交创意</li>
+                        <li>管理员审核创意内容和价值</li>
+                        <li>决定是否采纳并给出反馈</li>
+                        <li>采纳后发放相应积分</li>
+                        <li>优质创意可获得额外奖励</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- 我的创意 -->
+        <div id="my-ideas-tab" class="tab-content">
+            <div class="my-ideas-container">
+                <h2>我的创意</h2>
+                
+                <div class="ideas-stats">
+                    <div class="stat-card">
+                        <span class="stat-number" id="totalIdeas">0</span>
+                        <span class="stat-label">总创意数</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="adoptedIdeas">0</span>
+                        <span class="stat-label">已采纳</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="pendingIdeas">0</span>
+                        <span class="stat-label">待审核</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="earnedPoints">0</span>
+                        <span class="stat-label">获得积分</span>
+                    </div>
+                </div>
+
+                <div class="ideas-filter">
+                    <select id="statusFilter">
+                        <option value="">全部状态</option>
+                        <option value="pending">待审核</option>
+                        <option value="adopted">已采纳</option>
+                        <option value="rejected">未采纳</option>
+                    </select>
+                    <input type="text" id="searchIdeas" placeholder="搜索创意标题...">
+                </div>
+
+                <div id="myIdeasList" class="ideas-list">
+                    <!-- 创意列表将通过JavaScript动态加载 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 管理创意 (仅管理员可见) -->
+        <div id="manage-tab" class="tab-content">
+            <div class="manage-ideas-container">
+                <h2>创意管理</h2>
+                
+                <div class="manage-stats">
+                    <div class="stat-card">
+                        <span class="stat-number" id="totalSubmissions">0</span>
+                        <span class="stat-label">总提交数</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="pendingReview">0</span>
+                        <span class="stat-label">待审核</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="adoptedTotal">0</span>
+                        <span class="stat-label">已采纳</span>
+                    </div>
+                </div>
+
+                <div class="manage-filter">
+                    <select id="manageStatusFilter">
+                        <option value="">全部状态</option>
+                        <option value="pending">待审核</option>
+                        <option value="adopted">已采纳</option>
+                        <option value="rejected">未采纳</option>
+                    </select>
+                    <select id="userLevelFilter">
+                        <option value="">全部用户</option>
+                        <option value="normal">普通用户</option>
+                        <option value="active">活跃用户</option>
+                        <option value="core">核心用户</option>
+                        <option value="admin">管理员</option>
+                    </select>
+                    <input type="date" id="dateFilter">
+                </div>
+
+                <div id="manageIdeasList" class="manage-ideas-list">
+                    <!-- 管理列表将通过JavaScript动态加载 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 创意详情模态框 -->
+    <div id="ideaModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="ideaDetails"></div>
+        </div>
+    </div>
+
+    <!-- 审核模态框 -->
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="reviewForm">
+                <h3>审核创意</h3>
+                <div class="review-actions">
+                    <button id="adoptBtn" class="btn-success">采纳</button>
+                    <button id="rejectBtn" class="btn-danger">拒绝</button>
+                </div>
+                <div class="form-group">
+                    <label for="reviewFeedback">审核反馈</label>
+                    <textarea id="reviewFeedback" rows="4" placeholder="请提供审核意见和建议"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="bonusPoints">额外奖励积分</label>
+                    <input type="number" id="bonusPoints" min="0" max="50" value="0">
+                </div>
+                <div class="form-actions">
+                    <button id="submitReview" class="btn-primary">提交审核</button>
+                    <button id="cancelReview" class="btn-secondary">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/common.js"></script>
+    <script src="../js/ideas.js"></script>
+</body>
+</html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创意详情 - 创意中心</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../css/ideas.css">
+    <style>
+        .idea-detail-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.8) 0%, rgba(114, 9, 183, 0.3) 100%);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 245, 255, 0.2);
+            border-radius: 15px;
+        }
+        
+        .idea-header-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .idea-section {
+            margin-bottom: 30px;
+        }
+        
+        .idea-section-title {
+            color: #00f5ff;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+        }
+        
+        .comment-form {
+            margin-top: 20px;
+        }
+        
+        .review-form {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .review-form-title {
+            color: #00f5ff;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-col {
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">AI创作平台</div>
+            </div>
+            <div class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item">
+                    <span class="menu-icon">📊</span>
+                    <span class="menu-text">仪表盘</span>
+                </a>
+                <a href="projects.html" class="menu-item">
+                    <span class="menu-icon">📁</span>
+                    <span class="menu-text">项目管理</span>
+                </a>
+                <a href="ideas.html" class="menu-item active">
+                    <span class="menu-icon">💡</span>
+                    <span class="menu-text">创意中心</span>
+                </a>
+                <!-- 其他菜单项 -->
+            </div>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-container">
+            <!-- 顶部导航栏 -->
+            <div class="top-bar">
+                <div class="page-title">创意详情</div>
+                <div class="user-info">
+                    <span id="userRole" class="user-role">用户</span>
+                    <span id="currentUsername" class="username">用户名</span>
+                    <div class="avatar">👤</div>
+                </div>
+            </div>
+
+            <!-- 主要内容 -->
+            <div class="main-content">
+                <div class="content-header">
+                    <div class="header-content">
+                        <div>
+                            <h1 class="content-title" id="ideaTitle">创意标题</h1>
+                            <p class="content-subtitle">
+                                <span id="ideaCategory" class="idea-detail-category">创意分类</span>
+                                <span id="ideaStatus" class="idea-detail-status status-pending">状态</span>
+                            </p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="action-btn secondary" onclick="window.location.href='ideas.html'">
+                                <span>←</span>返回创意中心
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-body">
+                    <div class="idea-detail-container">
+                        <div class="idea-header-actions" id="ideaActions">
+                            <!-- 动态生成操作按钮 -->
+                        </div>
+                        
+                        <div class="idea-section">
+                            <div class="idea-meta">
+                                <div class="idea-detail-author">
+                                    <div class="author-avatar" id="authorAvatar">👤</div>
+                                    <span class="author-name" id="authorName">作者</span>
+                                </div>
+                                <div class="idea-date" id="ideaDate">提交时间</div>
+                            </div>
+                        </div>
+                        
+                        <div class="idea-section">
+                            <h3 class="idea-section-title">创意描述</h3>
+                            <div class="idea-detail-description" id="ideaDescription">
+                                <!-- 创意描述内容 -->
+                            </div>
+                        </div>
+                        
+                        <div class="idea-section" id="ideaDetailsSection">
+                            <h3 class="idea-section-title">详细信息</h3>
+                            <div class="idea-detail-section" id="scopeSection">
+                                <h4>适用范围</h4>
+                                <p id="ideaScope">适用范围内容</p>
+                            </div>
+                            <div class="idea-detail-section" id="targetSection">
+                                <h4>目标对象</h4>
+                                <p id="ideaTarget">目标对象内容</p>
+                            </div>
+                        </div>
+                        
+                        <div class="idea-section">
+                            <h3 class="idea-section-title">统计数据</h3>
+                            <div class="idea-detail-stats">
+                                <div class="idea-detail-stat">
+                                    <div class="stat-value" id="voteCount">0</div>
+                                    <div class="stat-label">好评</div>
+                                </div>
+                                <div class="idea-detail-stat">
+                                    <div class="stat-value" id="commentCount">0</div>
+                                    <div class="stat-label">评论</div>
+                                </div>
+                                <div class="idea-detail-stat" id="pointsStat">
+                                    <div class="stat-value" id="pointsCount">0</div>
+                                    <div class="stat-label">获得积分</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="idea-section" id="reviewFeedbackSection">
+                            <h3 class="idea-section-title">审核反馈</h3>
+                            <div class="review-feedback" id="reviewFeedback">
+                                <!-- 审核反馈内容 -->
+                            </div>
+                        </div>
+                        
+                        <div class="idea-section" id="reviewFormSection" style="display: none;">
+                            <div class="review-form">
+                                <h3 class="review-form-title">审核创意</h3>
+                                <form id="reviewForm" onsubmit="handleReviewIdea(event)">
+                                    <input type="hidden" id="reviewIdeaId">
+                                    
+                                    <div class="form-group">
+                                        <label for="reviewStatus" class="form-label">审核结果<span class="required-mark">*</span></label>
+                                        <select id="reviewStatus" name="reviewStatus" class="form-input form-select" required>
+                                            <option value="" disabled selected>请选择审核结果</option>
+                                            <option value="approved">采纳</option>
+                                            <option value="rejected">不采纳</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="reviewFeedbackInput" class="form-label">审核反馈<span class="required-mark">*</span></label>
+                                        <textarea id="reviewFeedbackInput" name="reviewFeedbackInput" class="form-input form-textarea" placeholder="请输入审核反馈意见" required></textarea>
+                                    </div>
+                                    
+                                    <div class="form-group" id="extraPointsGroup">
+                                        <label for="extraPoints" class="form-label">额外奖励积分</label>
+                                        <input type="number" id="extraPoints" name="extraPoints" class="form-input" value="0" min="0">
+                                        <div class="form-hint">基础积分为10分，可根据创意质量额外奖励积分</div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button type="button" class="idea-btn secondary" onclick="hideReviewForm()">取消</button>
+                                        <button type="submit" class="idea-btn primary">提交审核</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div class="idea-section">
+                            <h3 class="idea-section-title">评论区</h3>
+                            
+                            <div class="comment-form">
+                                <textarea class="comment-input" placeholder="写下你的评论..." id="commentInput"></textarea>
+                                <button class="idea-btn primary" onclick="addComment()">提交评论</button>
+                            </div>
+                            
+                            <div class="comment-list" id="commentList">
+                                <!-- 评论列表 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通知容器 -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <script src="../js/common.js"></script>
+    <script>
+        // 页面状态管理
+        const State = {
+            user: null,
+            idea: null,
+            hasVoted: false
+        };
+
+        // 页面初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initPage();
+        });
+
+        // 初始化页面
+        async function initPage() {
+            try {
+                // 检查用户登录状态
+                State.user = getCurrentUser();
+                if (!State.user) {
+                    window.location.href = '/';
+                    return;
+                }
+                
+                // 更新用户界面
+                updateUserInterface();
+                
+                // 获取创意ID
+                const ideaId = getIdeaIdFromUrl();
+                if (!ideaId) {
+                    showNotification('创意ID不存在', 'error');
+                    setTimeout(() => {
+                        window.location.href = 'ideas.html';
+                    }, 2000);
+                    return;
+                }
+                
+                // 加载创意数据
+                await loadIdeaDetails(ideaId);
+                
+            } catch (error) {
+                console.error('页面初始化失败:', error);
+                showNotification('页面加载失败，请刷新重试', 'error');
+            }
+        }
+
+        // 获取当前用户
+        function getCurrentUser() {
+            const userData = localStorage.getItem('userData') || localStorage.getItem('avaCreatorUser');
+            return userData ? JSON.parse(userData) : null;
+        }
+
+        // 更新用户界面
+        function updateUserInterface() {
+            const user = State.user;
+            if (!user) return;
+
+            // 更新用户名显示
+            const usernameEl = document.getElementById('currentUsername');
+            if (usernameEl) {
+                usernameEl.textContent = user.username || user.nickname || '用户';
+            }
+
+            // 更新角色显示
+            const roleEl = document.getElementById('userRole');
+            if (roleEl) {
+                const roleNames = {
+                    'admin': '管理员',
+                    'investor': '投资者',
+                    'product_manager': '产品经理',
+                    'designer': '设计师',
+                    'developer': '开发者'
+                };
+                roleEl.textContent = roleNames[user.role] || '用户';
+            }
+        }
+
+        // 从URL获取创意ID
+        function getIdeaIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // 加载创意详情
+        async function loadIdeaDetails(ideaId) {
+            try {
+                // 模拟API请求延迟
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                // 模拟获取创意详情
+                const idea = getMockIdea(ideaId);
+                
+                if (!idea) {
+                    showNotification('创意不存在', 'error');
+                    setTimeout(() => {
+                        window.location.href = 'ideas.html';
+                    }, 2000);
+                    return;
+                }
+                
+                State.idea = idea;
+                State.hasVoted = hasVoted(idea.id);
+                
+                // 渲染创意详情
+                renderIdeaDetails();
+                
+            } catch (error) {
+                console.error('加载创意详情失败:', error);
+                showNotification('加载创意详情失败', 'error');
+            }
+        }
+
+        // 获取模拟创意数据
+        function getMockIdea(ideaId) {
+            // 这里应该是从API获取数据，现在使用模拟数据
+            const mockIdeas = [
+                {
+                    id: '1',
+                    title: '智能创意推荐系统',
+                    description: '基于用户历史行为和偏好，使用AI算法推荐个性化创意内容，提高用户参与度和创意质量。这个系统可以分析用户过去点赞、评论和浏览的创意类型，结合用户的角色和兴趣标签，推荐最可能感兴趣的创意内容。同时，系统还可以推荐相似用户喜欢的创意，扩展用户的视野。',
+                    category: 'technology',
+                    status: 'approved',
+                    createdAt: '2024-02-15',
+                    author: {
+                        id: '101',
+                        name: '张三',
+                        avatar: '👨‍💻'
+                    },
+                    votes: 24,
+                    comments: [
+                        {
+                            id: '201',
+                            author: {
+                                id: '102',
+                                name: '李四',
+                                avatar: '👩‍🎨'
+                            },
+                            content: '这个创意非常棒！我们确实需要一个更智能的推荐系统。',
+                            createdAt: '2024-02-16T10:30:00Z'
+                        },
+                        {
+                            id: '202',
+                            author: {
+                                id: '103',
+                                name: '王五',
+                                avatar: '👨‍💼'
+                            },
+                            content: '建议考虑加入协同过滤算法，可以提高推荐准确性。',
+                            createdAt: '2024-02-17T14:20:00Z'
+                        }
+                    ],
+                    points: 30,
+                    reviewFeedback: '这是一个非常有价值的创意，可以显著提升平台用户体验。建议优先实施。',
+                    scope: '全平台',
+                    target: '所有用户'
+                },
+                {
+                    id: '2',
+                    title: '创意协作白板',
+                    description: '实时多人协作的在线白板工具，支持绘图、思维导图、便签等功能，帮助团队更好地进行创意头脑风暴。',
+                    category: 'product',
+                    status: 'pending',
+                    createdAt: '2024-02-20',
+                    author: {
+                        id: '102',
+                        name: '李四',
+                        avatar: '👩‍🎨'
+                    },
+                    votes: 15,
+                    comments: [],
+                    points: 0,
+                    scope: '网页应用',
+                    target: '设计师、产品经理'
+                }
+            ];
+            
+            return mockIdeas.find(idea => idea.id === ideaId);
+        }
+
+        // 渲染创意详情
+        function renderIdeaDetails() {
+            const idea = State.idea;
+            if (!idea) return;
+            
+            // 更新页面标题
+            document.title = `${idea.title} - 创意中心`;
+            
+            // 更新创意标题和分类
+            document.getElementById('ideaTitle').textContent = idea.title;
+            document.getElementById('ideaCategory').textContent = getCategoryName(idea.category);
+            
+            // 更新创意状态
+            const statusEl = document.getElementById('ideaStatus');
+            statusEl.textContent = getStatusName(idea.status);
+            statusEl.className = `idea-detail-status status-${idea.status}`;
+            
+            // 更新作者信息
+            document.getElementById('authorAvatar').textContent = idea.author.avatar;
+            document.getElementById('authorName').textContent = idea.author.name;
+            
+            // 更新提交时间
+            document.getElementById('ideaDate').textContent = `提交于 ${formatDate(idea.createdAt)}`;
+            
+            // 更新创意描述
+            document.getElementById('ideaDescription').textContent = idea.description;
+            
+            // 更新详细信息
+            const scopeSection = document.getElementById('scopeSection');
+            const targetSection = document.getElementById('targetSection');
+            
+            if (idea.scope) {
+                document.getElementById('ideaScope').textContent = idea.scope;
+                scopeSection.style.display = 'block';
+            } else {
+                scopeSection.style.display = 'none';
+            }
+            
+            if (idea.target) {
+                document.getElementById('ideaTarget').textContent = idea.target;
+                targetSection.style.display = 'block';
+            } else {
+                targetSection.style.display = 'none';
+            }
+            
+            if (!idea.scope && !idea.target) {
+                document.getElementById('ideaDetailsSection').style.display = 'none';
+            } else {
+                document.getElementById('ideaDetailsSection').style.display = 'block';
+            }
+            
+            // 更新统计数据
+            document.getElementById('voteCount').textContent = idea.votes;
+            document.getElementById('commentCount').textContent = idea.comments ? idea.comments.length : 0;
+            
+            const pointsStat = document.getElementById('pointsStat');
+            if (idea.status === 'approved') {
+                document.getElementById('pointsCount').textContent = idea.points;
+                pointsStat.style.display = 'block';
+            } else {
+                pointsStat.style.display = 'none';
+            }
+            
+            // 更新审核反馈
+            const reviewFeedbackSection = document.getElementById('reviewFeedbackSection');
+            const reviewFeedback = document.getElementById('reviewFeedback');
+            
+            if (idea.status !== 'pending' && idea.reviewFeedback) {
+                reviewFeedback.className = `review-feedback ${idea.status}`;
+                reviewFeedback.innerHTML = `
+                    <h4>${idea.status === 'approved' ? '审核通过' : '未被采纳'}</h4>
+                    <p>${idea.reviewFeedback}</p>
+                `;
+                reviewFeedbackSection.style.display = 'block';
+            } else {
+                reviewFeedbackSection.style.display = 'none';
+            }
+            
+            // 更新操作按钮
+            renderActionButtons();
+            
+            // 渲染评论列表
+            renderComments();
+        }
+
+        // 渲染操作按钮
+        function renderActionButtons() {
+            const idea = State.idea;
+            const actionsContainer = document.getElementById('ideaActions');
+            
+            if (!idea || !actionsContainer) return;
+            
+            let actionsHTML = '';
+            
+            // 投票按钮
+            actionsHTML += `
+                <button class="idea-btn vote ${State.hasVoted ? 'active' : ''}" onclick="voteIdea()">
+                    <span>👍</span> ${State.hasVoted ? '已点赞' : '点赞'}
+                </button>
+            `;
+            
+            // 审核按钮（仅管理员可见且创意状态为待审核）
+            if (idea.status === 'pending' && isAdmin()) {
+                actionsHTML += `
+                    <button class="idea-btn primary" onclick="showReviewForm()">
+                        审核创意
+                    </button>
+                `;
+            }
+            
+            // 编辑按钮（仅作者可见且创意状态为待审核）
+            if (idea.status === 'pending' && isCurrentUserAuthor()) {
+                actionsHTML += `
+                    <button class="idea-btn secondary" onclick="editIdea()">
+                        编辑创意
+                    </button>
+                `;
+            }
+            
+            actionsContainer.innerHTML = actionsHTML;
+        }
+
+        // 渲染评论列表
+        function renderComments() {
+            const idea = State.idea;
+            const commentList = document.getElementById('commentList');
+            
+            if (!idea || !commentList) return;
+            
+            if (!idea.comments || idea.comments.length === 0) {
+                commentList.innerHTML = '<div class="empty-state"><p>暂无评论，成为第一个评论者吧！</p></div>';
+                return;
+            }
+            
+            const commentsHTML = idea.comments.map(comment => `
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <div class="comment-author">
+                            <div class="author-avatar">${comment.author.avatar}</div>
+                            <span class="author-name">${comment.author.name}</span>
+                        </div>
+                        <span class="comment-time">${formatRelativeTime(comment.createdAt)}</span>
+                    </div>
+                    <div class="comment-content">
+                        ${comment.content}
+                    </div>
+                </div>
+            `).join('');
+            
+            commentList.innerHTML = commentsHTML;
+        }
+
+        // 显示审核表单
+        function showReviewForm() {
+            if (!isAdmin()) {
+                showNotification('您没有权限审核创意', 'error');
+                return;
+            }
+            
+            document.getElementById('reviewFormSection').style.display = 'block';
+            document.getElementById('reviewIdeaId').value = State.idea.id;
+            document.getElementById('reviewStatus').value = '';
+            document.getElementById('reviewFeedbackInput').value = '';
+            document.getElementById('extraPoints').value = 0;
+            
+            // 滚动到表单位置
+            document.getElementById('reviewFormSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 隐藏审核表单
+        function hideReviewForm() {
+            document.getElementById('reviewFormSection').style.display = 'none';
+        }
+
+        // 处理审核创意
+        function handleReviewIdea(event) {
+            event.preventDefault();
+            
+            if (!isAdmin()) {
+                showNotification('您没有权限审核创意', 'error');
+                return;
+            }
+            
+            const status = document.getElementById('reviewStatus').value;
+            const feedback = document.getElementById('reviewFeedbackInput').value;
+            const extraPoints = parseInt(document.getElementById('extraPoints').value) || 0;
+            
+            // 验证表单
+            if (!status || !feedback) {
+                showNotification('请填写完整的审核信息', 'error');
+                return;
+            }
+            
+            // 模拟审核处理
+            setTimeout(() => {
+                // 更新创意状态
+                State.idea.status = status;
+                State.idea.reviewFeedback = feedback;
+                
+                // 如果采纳，计算积分
+                if (status === 'approved') {
+                    // 基础积分10分 + 额外奖励积分
+                    State.idea.points = 10 + extraPoints;
+                } else {
+                    State.idea.points = 0;
+                }
+                
+                // 重新渲染创意详情
+                renderIdeaDetails();
+                
+                // 隐藏审核表单
+                hideReviewForm();
+                
+                showNotification(`创意审核完成，状态已更新为"${getStatusName(status)}"`, 'success');
+            }, 800);
+        }
+
+        // 为创意投票
+        function voteIdea() {
+            if (!State.idea) return;
+            
+            // 模拟投票逻辑
+            if (State.hasVoted) {
+                // 取消投票
+                State.idea.votes--;
+                State.hasVoted = false;
+                showNotification('已取消点赞', 'info');
+            } else {
+                // 投票
+                State.idea.votes++;
+                State.hasVoted = true;
+                
+                // 如果创意已被采纳，每获得一个好评额外获得10积分
+                if (State.idea.status === 'approved') {
+                    State.idea.points += 10;
+                }
+                
+                showNotification('点赞成功', 'success');
+            }
+            
+            // 更新本地存储中的投票记录
+            toggleVoteRecord(State.idea.id);
+            
+            // 重新渲染创意详情
+            renderIdeaDetails();
+        }
+
+        // 添加评论
+        function addComment() {
+            if (!State.idea) return;
+            
+            const commentInput = document.getElementById('commentInput');
+            if (!commentInput || !commentInput.value.trim()) {
+                showNotification('请输入评论内容', 'error');
+                return;
+            }
+            
+            // 模拟添加评论
+            const newComment = {
+                id: Date.now().toString(),
+                author: {
+                    id: State.user.id || Date.now().toString(),
+                    name: State.user.username || State.user.nickname || '用户',
+                    avatar: '👤'
+                },
+                content: commentInput.value.trim(),
+                createdAt: new Date().toISOString()
+            };
+            
+            // 确保comments数组存在
+            if (!State.idea.comments) {
+                State.idea.comments = [];
+            }
+            
+            // 添加新评论
+            State.idea.comments.push(newComment);
+            
+            // 清空输入框
+            commentInput.value = '';
+            
+            // 重新渲染评论列表
+            renderComments();
+            
+            showNotification('评论发布成功', 'success');
+        }
+
+        // 编辑创意
+        function editIdea() {
+            if (!State.idea) return;
+            
+            // 检查权限
+            if (!isCurrentUserAuthor() && !isAdmin()) {
+                showNotification('您没有权限编辑此创意', 'error');
+                return;
+            }
+            
+            // 如果创意已经被审核，不允许编辑
+            if (State.idea.status !== 'pending') {
+                showNotification('已审核的创意不能编辑', 'error');
+                return;
+            }
+            
+            // 跳转到编辑页面
+            window.location.href = `idea-edit.html?id=${State.idea.id}`;
+        }
+
+        // 检查当前用户是否是管理员
+        function isAdmin() {
+            return State.user && State.user.role === 'admin';
+        }
+
+        // 检查当前用户是否是创意作者
+        function isCurrentUserAuthor() {
+            return State.user && State.idea && State.idea.author && 
+                   (State.user.id === State.idea.author.id || 
+                    State.user.username === State.idea.author.name);
+        }
+
+        // 检查用户是否已经为创意投票
+        function hasVoted(ideaId) {
+            const votedIdeas = getVotedIdeas();
+            return votedIdeas.includes(ideaId);
+        }
+
+        // 切换投票记录
+        function toggleVoteRecord(ideaId) {
+            const votedIdeas = getVotedIdeas();
+            const index = votedIdeas.indexOf(ideaId);
+            
+            if (index === -1) {
+                // 添加投票记录
+                votedIdeas.push(ideaId);
+            } else {
+                // 移除投票记录
+                votedIdeas.splice(index, 1);
+            }
+            
+            // 保存到本地存储
+            localStorage.setItem('votedIdeas', JSON.stringify(votedIdeas));
+        }
+
+        // 获取用户已投票的创意ID列表
+        function getVotedIdeas() {
+            const votedIdeasStr = localStorage.getItem('votedIdeas');
+            return votedIdeasStr ? JSON.parse(votedIdeasStr) : [];
+        }
+
+        // 获取分类名称
+        function getCategoryName(category) {
+            const categoryNames = {
+                'product': '产品创意',
+                'technology': '技术创意',
+                'marketing': '营销创意',
+                'ux': '用户体验',
+                'other': '其他'
+            };
+            return categoryNames[category] || '未分类';
+        }
+
+        // 获取状态名称
+        function getStatusName(status) {
+            const statusNames = {
+                'pending': '待审核',
+                'approved': '已采纳',
+                'rejected': '未采纳'
+            };
+            return statusNames[status] || '未知状态';
+        }
+
+        // 格式化日期
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        }
+        
+        // 格式化相对时间
+        function formatRelativeTime(dateStr) {
+            if (!dateStr) return '';
+            
+            const date = new Date(dateStr);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffSec = Math.floor(diffMs / 1000);
+            const diffMin = Math.floor(diffSec / 60);
+            const diffHour = Math.floor(diffMin / 60);
+            const diffDay = Math.floor(diffHour / 24);
+            
+            if (diffDay > 30) {
+                return formatDate(dateStr);
+            } else if (diffDay > 0) {
+                return `${diffDay}天前`;
+            } else if (diffHour > 0) {
+                return `${diffHour}小时前`;
+            } else if (diffMin > 0) {
+                return `${diffMin}分钟前`;
+            } else {
+                return '刚刚';
+            }
+        }
+        
+        // 显示通知
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <span class="notification-icon">${getNotificationIcon(type)}</span>
+                    <span class="notification-message">${message}</span>
+                </div>
+                <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            // 添加到页面
+            const container = document.getElementById('notificationContainer');
+            container.appendChild(notification);
+            
+            // 自动关闭
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.classList.add('fade-out');
+                    setTimeout(() => notification.remove(), 500);
+                }
+            }, 5000);
+        }
+        
+        // 获取通知图标
+        function getNotificationIcon(type) {
+            const icons = {
+                'success': '✅',
+                'error': '❌',
+                'info': 'ℹ️'
+            };
+            return icons[type] || 'ℹ️';
+        }
+    </script>

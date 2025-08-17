@@ -7,6 +7,90 @@
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #7209b7 100%);
 }
 
+/* 水平导航栏 */
+.horizontal-nav {
+    background: rgba(26, 26, 46, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 2px solid rgba(0, 245, 255, 0.2);
+    padding: 10px 0;
+    position: sticky;
+    top: 80px;
+    z-index: 90;
+}
+
+.horizontal-nav .nav-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 30px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.horizontal-nav .nav-container::-webkit-scrollbar {
+    display: none;
+}
+
+.horizontal-nav .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: transparent;
+    border: 2px solid rgba(0, 245, 255, 0.3);
+    border-radius: 25px;
+    text-decoration: none;
+    color: #e8f4f8;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    min-width: fit-content;
+}
+
+.horizontal-nav .nav-item:hover {
+    background: rgba(0, 245, 255, 0.1);
+    border-color: #00f5ff;
+    color: #00f5ff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 245, 255, 0.2);
+}
+
+.horizontal-nav .nav-item.active {
+    background: linear-gradient(45deg, #7209b7, #533483);
+    color: white;
+    border-color: #00f5ff;
+}
+
+.horizontal-nav .nav-item .icon {
+    font-size: 1.1rem;
+}
+
+.horizontal-nav .nav-item .label {
+    font-weight: 500;
+}
+
+/* 响应式设计 - 水平导航 */
+@media (max-width: 768px) {
+    .horizontal-nav .nav-container {
+        padding: 0 15px;
+        gap: 8px;
+    }
+    
+    .horizontal-nav .nav-item {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .horizontal-nav .nav-item .label {
+        display: none;
+    }
+    
+    .horizontal-nav .nav-item .icon {
+        font-size: 1.2rem;
+    }
+}
+
 /* 头部导航样式 */
 .app-header {
     display: flex;

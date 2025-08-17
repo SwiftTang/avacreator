@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提交创意 - 创意中心</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../css/ideas.css">
+    <style>
+        .submit-form {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.8) 0%, rgba(114, 9, 183, 0.3) 100%);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 245, 255, 0.2);
+            border-radius: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00f5ff;
+            font-weight: 600;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #00f5ff;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+        }
+        
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300f5ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+            padding-right: 40px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .form-hint {
+            font-size: 0.9em;
+            color: rgba(232, 244, 248, 0.7);
+            margin-top: 5px;
+        }
+        
+        .required-mark {
+            color: #ff4757;
+            margin-left: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">AI创作平台</div>
+            </div>
+            <div class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item">
+                    <span class="menu-icon">📊</span>
+                    <span class="menu-text">仪表盘</span>
+                </a>
+                <a href="projects.html" class="menu-item">
+                    <span class="menu-icon">📁</span>
+                    <span class="menu-text">项目管理</span>
+                </a>
+                <a href="ideas.html" class="menu-item active">
+                    <span class="menu-icon">💡</span>
+                    <span class="menu-text">创意中心</span>
+                </a>
+                <!-- 其他菜单项 -->
+            </div>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-container">
+            <!-- 顶部导航栏 -->
+            <div class="top-bar">
+                <div class="page-title">提交创意</div>
+                <div class="user-info">
+                    <span id="userRole" class="user-role">用户</span>
+                    <span id="currentUsername" class="username">用户名</span>
+                    <div class="avatar">👤</div>
+                </div>
+            </div>
+
+            <!-- 主要内容 -->
+            <div class="main-content">
+                <div class="content-header">
+                    <div class="header-content">
+                        <div>
+                            <h1 class="content-title">提交新创意</h1>
+                            <p class="content-subtitle">分享您的创意，为平台发展贡献力量</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="action-btn secondary" onclick="window.location.href='ideas.html'">
+                                <span>←</span>返回创意中心
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-body">
+                    <div class="submit-form">
+                        <form id="ideaSubmitForm" onsubmit="handleSubmitIdea(event)">
+                            <div class="form-group">
+                                <label for="ideaTitle" class="form-label">创意标题<span class="required-mark">*</span></label>
+                                <input type="text" id="ideaTitle" name="ideaTitle" class="form-input" placeholder="请输入一个简洁明了的标题" required>
+                                <div class="form-hint">好的标题应该简洁明了，能够清晰表达创意的核心内容</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="ideaDescription" class="form-label">创意描述<span class="required-mark">*</span></label>
+                                <textarea id="ideaDescription" name="ideaDescription" class="form-input form-textarea" placeholder="详细描述您的创意，包括目的、价值和实现方式等" required></textarea>
+                                <div class="form-hint">详细描述您的创意，包括它解决的问题、带来的价值以及可能的实现方式</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="ideaCategory" class="form-label">创意分类<span class="required-mark">*</span></label>
+                                <select id="ideaCategory" name="ideaCategory" class="form-input form-select" required>
+                                    <option value="" disabled selected>请选择创意分类</option>
+                                    <option value="product">产品创意</option>
+                                    <option value="technology">技术创意</option>
+                                    <option value="marketing">营销创意</option>
+                                    <option value="ux">用户体验</option>
+                                    <option value="other">其他</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="ideaScope" class="form-label">适用范围</label>
+                                <input type="text" id="ideaScope" name="ideaScope" class="form-input" placeholder="例如：全平台、移动应用、网页端等">
+                                <div class="form-hint">指明您的创意适用于哪些场景或平台</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="ideaTarget" class="form-label">目标对象</label>
+                                <input type="text" id="ideaTarget" name="ideaTarget" class="form-input" placeholder="例如：所有用户、设计师、开发者等">
+                                <div class="form-hint">指明您的创意主要面向哪些用户群体</div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="idea-btn secondary" onclick="window.location.href='ideas.html'">取消</button>
+                                <button type="submit" class="idea-btn primary">提交创意</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通知容器 -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <script src="../js/common.js"></script>
+    <script>
+        // 页面状态管理
+        let user = null;
+
+        // 页面初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initPage();
+        });
+
+        // 初始化页面
+        function initPage() {
+            try {
+                // 检查用户登录状态
+                user = getCurrentUser();
+                if (!user) {
+                    window.location.href = '/';
+                    return;
+                }
+                
+                // 更新用户界面
+                updateUserInterface();
+                
+            } catch (error) {
+                console.error('页面初始化失败:', error);
+                showNotification('页面加载失败，请刷新重试', 'error');
+            }
+        }
+
+        // 获取当前用户
+        function getCurrentUser() {
+            const userData = localStorage.getItem('userData') || localStorage.getItem('avaCreatorUser');
+            return userData ? JSON.parse(userData) : null;
+        }
+
+        // 更新用户界面
+        function updateUserInterface() {
+            if (!user) return;
+
+            // 更新用户名显示
+            const usernameEl = document.getElementById('currentUsername');
+            if (usernameEl) {
+                usernameEl.textContent = user.username || user.nickname || '用户';
+            }
+
+            // 更新角色显示
+            const roleEl = document.getElementById('userRole');
+            if (roleEl) {
+                const roleNames = {
+                    'admin': '管理员',
+                    'investor': '投资者',
+                    'product_manager': '产品经理',
+                    'designer': '设计师',
+                    'developer': '开发者'
+                };
+                roleEl.textContent = roleNames[user.role] || '用户';
+            }
+        }
+
+        // 处理创意提交
+        function handleSubmitIdea(event) {
+            event.preventDefault();
+
+            const formData = {
+                title: document.getElementById('ideaTitle').value,
+                description: document.getElementById('ideaDescription').value,
+                category: document.getElementById('ideaCategory').value,
+                scope: document.getElementById('ideaScope').value,
+                target: document.getElementById('ideaTarget').value
+            };
+
+            // 验证表单
+            if (!formData.title || !formData.description || !formData.category) {
+                showNotification('请填写完整的创意信息', 'error');
+                return;
+            }
+
+            // 模拟提交创意
+            setTimeout(() => {
+                showNotification('创意提交成功！等待管理员审核', 'success');
+                
+                // 重定向到创意中心页面
+                setTimeout(() => {
+                    window.location.href = 'ideas.html';
+                }, 1500);
+            }, 800);
+        }
+
+        // 显示通知
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <span class="notification-icon">${getNotificationIcon(type)}</span>
+                    <span class="notification-message">${message}</span>
+                </div>
+                <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            // 添加到页面
+            const container = document.getElementById('notificationContainer');
+            container.appendChild(notification);
+            
+            // 自动关闭
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.classList.add('fade-out');
+                    setTimeout(() => notification.remove(), 500);
+                }
+            }, 5000);
+        }
+
+        // 获取通知图标
+        function getNotificationIcon(type) {
+            const icons = {
+                'success': '✅',
+                'error': '❌',
+                'info': 'ℹ️'
+            };
+            return icons[type] || 'ℹ️';
+        }
+    </script>
+</body>
+</html>

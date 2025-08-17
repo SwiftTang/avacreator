@@ -46,7 +46,15 @@ async function initDashboard() {
 // 获取当前用户
 function getCurrentUser() {
     const userData = localStorage.getItem('userData') || localStorage.getItem('avaCreatorUser');
-    return userData ? JSON.parse(userData) : null;
+    if (userData) {
+        const user = JSON.parse(userData);
+        // 如果用户没有角色信息，设置默认角色为admin（用于测试）
+        if (!user.role) {
+            user.role = 'admin';
+        }
+        return user;
+    }
+    return null;
 }
 
 // 更新用户界面
@@ -77,24 +85,40 @@ function updateUserInterface() {
 // 加载角色导航
 function loadRoleNavigation() {
     const user = DashboardState.user;
-    const roleNavSection = document.getElementById('roleNavSection');
+    const horizontalNav = document.getElementById('horizontalNav');
     
-    if (!roleNavSection || !user) return;
+    console.log('加载水平导航:', { user, horizontalNav });
+    
+    if (!horizontalNav) {
+        console.error('找不到horizontalNav元素');
+        return;
+    }
+    
+    if (!user) {
+        console.error('用户信息不存在');
+        return;
+    }
 
     const navigation = getRoleNavigation(user.role);
+    console.log('获取到的导航:', navigation);
     
-    if (navigation.length === 0) return;
+    if (navigation.length === 0) {
+        console.log('导航为空，角色:', user.role);
+        return;
+    }
 
-    roleNavSection.innerHTML = `
-        <h3>专业功能</h3>
-        <ul class="nav-list">
+    horizontalNav.innerHTML = `
+        <div class="nav-container">
             ${navigation.map(item => `
-                <li><a href="${item.path}" class="nav-item">
-                    <span class="icon">${item.icon}</span>${item.name}
-                </a></li>
+                <a href="${item.path}" class="nav-item">
+                    <span class="icon">${item.icon}</span>
+                    <span class="label">${item.name}</span>
+                </a>
             `).join('')}
-        </ul>
+        </div>
     `;
+    
+    console.log('水平导航已加载');
 }
 
 // 获取角色导航配置 - admin用户拥有最高权限，可访问所有功能
@@ -102,7 +126,7 @@ function getRoleNavigation(role) {
     const navigation = {
         admin: [
             { name: '运营中心', path: '/operations', icon: '⚙️' },
-            { name: '创意中心', path: '/ideas', icon: '💡' },
+            { name: '创意中心', path: '/pages/ideas.html', icon: '💡' },
             { name: '项目中心', path: '/projects', icon: '📋' },
             { name: '任务中心', path: '/tasks', icon: '✅' },
             { name: '产品中心', path: '/products', icon: '📦' },

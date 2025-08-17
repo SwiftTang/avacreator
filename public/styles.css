@@ -56,6 +56,31 @@ body {
     font-weight: 500;
 }
 
+.nav-menu {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    opacity: 0.9;
+    font-weight: 500;
+    border: 2px solid rgba(0, 245, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.nav-link:hover {
+    opacity: 1;
+    background: rgba(0, 245, 255, 0.1);
+    transform: translateY(-1px);
+    border-color: rgba(0, 245, 255, 0.5);
+}
+
 .nav-menu button {
     background: linear-gradient(45deg, #7209b7, #533483);
     color: white;

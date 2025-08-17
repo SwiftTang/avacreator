@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我们 - CB005</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../css/about.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>CB005 - 关于我们</h1>
+                <div class="nav-links">
+                    <a href="../index.html" class="nav-link">首页</a>
+                    <a href="dashboard.html" class="nav-link">控制台</a>
+                    <a href="projects.html" class="nav-link">项目</a>
+                    <a href="about.html" class="nav-link active">关于</a>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- 关于信息 -->
+            <section class="about-section">
+                <div class="about-card">
+                    <h2>关于 CB005</h2>
+                    <p>CB005 是一个创新的协作平台，致力于为开发者、设计师、产品经理和投资者提供高效的项目管理和创意孵化环境。</p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <div class="feature-icon">🚀</div>
+                            <h3>项目管理</h3>
+                            <p>完整的项目生命周期管理，从创意到上线</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">💡</div>
+                            <h3>创意孵化</h3>
+                            <p>创意提交、评审和积分奖励机制</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">👥</div>
+                            <h3>团队协作</h3>
+                            <p>多角色协作，高效沟通</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <h3>数据分析</h3>
+                            <p>项目进度和团队效率分析</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 开发者工具 -->
+            <section class="tools-section">
+                <div class="tools-card">
+                    <h2>🛠️ 开发者工具</h2>
+                    <p>为开发者和团队提供的实用工具集合</p>
+                    
+                    <div class="tools-grid">
+                        <div class="tool-item" onclick="openIdeasCenter()">
+                            <div class="tool-icon">💡</div>
+                            <h3>创意中心</h3>
+                            <p>创意提交、管理和评审平台</p>
+                            <div class="tool-status">可用</div>
+                        </div>
+                        
+                        <div class="tool-item disabled">
+                            <div class="tool-icon">🧪</div>
+                            <h3>测试 API</h3>
+                            <p>API 接口测试工具</p>
+                            <div class="tool-status">开发中</div>
+                        </div>
+                        
+                        <div class="tool-item disabled">
+                            <div class="tool-icon">📝</div>
+                            <h3>文档生成</h3>
+                            <p>自动生成项目文档</p>
+                            <div class="tool-status">计划中</div>
+                        </div>
+                        
+                        <div class="tool-item disabled">
+                            <div class="tool-icon">🔍</div>
+                            <h3>代码审查</h3>
+                            <p>代码质量检查工具</p>
+                            <div class="tool-status">计划中</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 团队信息 -->
+            <section class="team-section">
+                <div class="team-card">
+                    <h2>团队介绍</h2>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="member-avatar">👨‍💻</div>
+                            <h3>技术团队</h3>
+                            <p>经验丰富的全栈开发团队</p>
+                        </div>
+                        <div class="team-member">
+                            <div class="member-avatar">🎨</div>
+                            <h3>设计团队</h3>
+                            <p>专业的UI/UX设计师</p>
+                        </div>
+                        <div class="team-member">
+                            <div class="member-avatar">📊</div>
+                            <h3>产品团队</h3>
+                            <p>资深产品经理和分析师</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 联系信息 -->
+            <section class="contact-section">
+                <div class="contact-card">
+                    <h2>联系我们</h2>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-label">邮箱:</span>
+                            <span class="contact-value">contact@cb005.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">版本:</span>
+                            <span class="contact-value">v1.01</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">更新时间:</span>
+                            <span class="contact-value">2025年8月</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/common.js"></script>
+    <script>
+        function openIdeasCenter() {
+            window.open('ideas.html', '_blank');
+        }
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加页面动画
+            const sections = document.querySelectorAll('section');
+            sections.forEach((section, index) => {
+                section.style.animationDelay = `${index * 0.1}s`;
+                section.classList.add('fade-in');
+            });
+        });
+    </script>
+</body>
+</html>

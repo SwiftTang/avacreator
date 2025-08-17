@@ -167,7 +167,7 @@ function updateUserInterface(userData) {
     
     // 登录成功后跳转到仪表板
     setTimeout(() => {
-        window.location.href = '/dashboard';
+        window.location.href = '/pages/dashboard.html';
     }, 1000);
 }
 

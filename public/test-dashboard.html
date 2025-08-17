@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试工作台 - AVACreator</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 头部导航 -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="logo">
+                    <h1>🚀 AVACreator</h1>
+                    <span class="tagline">极速协同创新平台</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="notifications">
+                    <button class="notification-btn">
+                        <span class="icon">🔔</span>
+                        <span class="badge">3</span>
+                    </button>
+                </div>
+                <div class="user-menu">
+                    <button class="user-btn">
+                        <span class="avatar">👤</span>
+                        <span class="username">admin</span>
+                        <span class="role-badge">管理员</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="app-body">
+            <!-- 侧边栏导航 -->
+            <aside class="sidebar">
+                <nav class="main-nav">
+                    <div class="nav-section">
+                        <h3>主要功能</h3>
+                        <ul class="nav-list">
+                            <li><a href="/pages/dashboard.html" class="nav-item active">
+                                <span class="icon">🏠</span>工作台
+                            </a></li>
+                            <li><a href="/events" class="nav-item">
+                                <span class="icon">📅</span>事件中心
+                            </a></li>
+                            <li><a href="/profile" class="nav-item">
+                                <span class="icon">👤</span>个人中心
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="nav-section">
+                        <h3>专业功能</h3>
+                        <ul class="nav-list">
+                            <li><a href="/pages/ideas.html" class="nav-item">
+                                <span class="icon">💡</span>创意中心
+                            </a></li>
+                            <li><a href="/pages/projects.html" class="nav-item">
+                                <span class="icon">📋</span>项目中心
+                            </a></li>
+                            <li><a href="/tasks" class="nav-item">
+                                <span class="icon">✅</span>任务中心
+                            </a></li>
+                            <li><a href="/products" class="nav-item">
+                                <span class="icon">📦</span>产品中心
+                            </a></li>
+                            <li><a href="/users" class="nav-item">
+                                <span class="icon">👥</span>用户管理
+                            </a></li>
+                            <li><a href="/settings" class="nav-item">
+                                <span class="icon">⚙️</span>系统设置
+                            </a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </aside>
+
+            <!-- 主内容区 -->
+            <main class="main-content">
+                <div class="page-header">
+                    <h2>工作台</h2>
+                    <p class="page-description">欢迎回来，这里是您的个人工作台</p>
+                </div>
+
+                <!-- 仪表板内容 -->
+                <div class="dashboard-content">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="icon">👥</span>
+                            <div class="value">1250</div>
+                            <div class="label">总用户数</div>
+                            <div class="change positive">+12% 本月</div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="icon">📋</span>
+                            <div class="value">45</div>
+                            <div class="label">活跃项目</div>
+                            <div class="change positive">+8% 本周</div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="icon">✅</span>
+                            <div class="value">892</div>
+                            <div class="label">完成任务</div>
+                            <div class="change positive">+15% 本月</div>
+                        </div>
+                        <div class="stat-card">
+                            <span class="icon">💰</span>
+                            <div class="value">¥125K</div>
+                            <div class="label">平台收入</div>
+                            <div class="change positive">+22% 本月</div>
+                        </div>
+                    </div>
+
+                    <div class="content-section">
+                        <div class="section-header">
+                            <h3 class="section-title">快速访问</h3>
+                        </div>
+                        <div class="quick-access">
+                            <a href="/pages/ideas.html" class="quick-link">
+                                <span class="icon">💡</span>
+                                <div class="link-info">
+                                    <h4>创意中心</h4>
+                                    <p>提交和管理创意</p>
+                                </div>
+                            </a>
+                            <a href="/pages/idea-submit.html" class="quick-link">
+                                <span class="icon">➕</span>
+                                <div class="link-info">
+                                    <h4>新建创意</h4>
+                                    <p>快速提交新创意</p>
+                                </div>
+                            </a>
+                            <a href="/pages/my-ideas.html" class="quick-link">
+                                <span class="icon">📝</span>
+                                <div class="link-info">
+                                    <h4>我的创意</h4>
+                                    <p>查看个人创意状态</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <style>
+    .quick-access {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .quick-link {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        text-decoration: none;
+        color: var(--text-color);
+        transition: all 0.2s ease;
+    }
+
+    .quick-link:hover {
+        background: var(--hover-bg);
+        border-color: var(--primary-color);
+        transform: translateY(-2px);
+    }
+
+    .quick-link .icon {
+        font-size: 2rem;
+        margin-right: 1rem;
+    }
+
+    .link-info h4 {
+        margin: 0 0 0.25rem 0;
+        color: var(--primary-color);
+    }
+
+    .link-info p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+    </style>
+</body>
+</html>

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的创意 - 创意中心</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../css/ideas.css">
+    <style>
+        .my-ideas-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .idea-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.8) 0%, rgba(114, 9, 183, 0.3) 100%);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 245, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .idea-table th,
+        .idea-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+        }
+        
+        .idea-table th {
+            background: rgba(0, 0, 0, 0.3);
+            color: #00f5ff;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .idea-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .idea-table tr:hover {
+            background: rgba(0, 245, 255, 0.1);
+        }
+        
+        .idea-table .idea-title {
+            font-weight: 600;
+            color: #e8f4f8;
+        }
+        
+        .idea-table .idea-title a {
+            color: #00f5ff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .idea-table .idea-title a:hover {
+            text-decoration: underline;
+            opacity: 0.8;
+        }
+        
+        .idea-table .idea-date {
+            color: rgba(232, 244, 248, 0.7);
+            font-size: 0.9em;
+        }
+        
+        .idea-table .idea-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        
+        .idea-table .idea-points {
+            font-weight: 600;
+            color: #a8e6cf;
+        }
+        
+        .idea-table .idea-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .idea-table .action-btn {
+            padding: 5px 10px;
+            font-size: 0.8em;
+        }
+        
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.8) 0%, rgba(114, 9, 183, 0.3) 100%);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 245, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #00f5ff;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: rgba(232, 244, 248, 0.7);
+            font-size: 0.9em;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-select {
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 0.9em;
+            min-width: 150px;
+        }
+        
+        .filter-select:focus {
+            outline: none;
+            border-color: #00f5ff;
+        }
+        
+        @media (max-width: 768px) {
+            .idea-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">AI创作平台</div>
+            </div>
+            <div class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item">
+                    <span class="menu-icon">📊</span>
+                    <span class="menu-text">仪表盘</span>
+                </a>
+                <a href="projects.html" class="menu-item">
+                    <span class="menu-icon">📁</span>
+                    <span class="menu-text">项目管理</span>
+                </a>
+                <a href="ideas.html" class="menu-item active">
+                    <span class="menu-icon">💡</span>
+                    <span class="menu-text">创意中心</span>
+                </a>
+                <!-- 其他菜单项 -->
+            </div>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-container">
+            <!-- 顶部导航栏 -->
+            <div class="top-bar">
+                <div class="page-title">我的创意</div>
+                <div class="user-info">
+                    <span id="userRole" class="user-role">用户</span>
+                    <span id="currentUsername" class="username">用户名</span>
+                    <div class="avatar">👤</div>
+                </div>
+            </div>
+
+            <!-- 主要内容 -->
+            <div class="main-content">
+                <div class="content-header">
+                    <div class="header-content">
+                        <div>
+                            <h1 class="content-title">我的创意</h1>
+                            <p class="content-subtitle">管理您提交的所有创意</p>
+                        </div>
+                        <div class="header-actions">
+                            <button class="action-btn" onclick="window.location.href='idea-submit.html'">
+                                <span>➕</span>提交创意
+                            </button>
+                            <button class="action-btn secondary" onclick="window.location.href='ideas.html'">
+                                <span>←</span>返回创意中心
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-body">
+                    <div class="my-ideas-container">
+                        <!-- 统计卡片 -->
+                        <div class="stats-cards">
+                            <div class="stat-card">
+                                <div class="stat-value" id="totalIdeas">0</div>
+                                <div class="stat-label">创意总数</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="approvedIdeas">0</div>
+                                <div class="stat-label">已采纳创意</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="totalPoints">0</div>
+                                <div class="stat-label">获得积分</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="totalVotes">0</div>
+                                <div class="stat-label">获得好评</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 筛选器 -->
+                        <div class="filters">
+                            <select id="statusFilter" class="filter-select" onchange="filterIdeas()">
+                                <option value="all">所有状态</option>
+                                <option value="pending">待审核</option>
+                                <option value="approved">已采纳</option>
+                                <option value="rejected">未采纳</option>
+                            </select>
+                            
+                            <select id="sortFilter" class="filter-select" onchange="filterIdeas()">
+                                <option value="date-desc">最新提交</option>
+                                <option value="date-asc">最早提交</option>
+                                <option value="votes-desc">好评最多</option>
+                                <option value="points-desc">积分最高</option>
+                            </select>
+                        </div>
+                        
+                        <!-- 创意表格 -->
+                        <table class="idea-table">
+                            <thead>
+                                <tr>
+                                    <th>创意标题</th>
+                                    <th>提交时间</th>
+                                    <th>状态</th>
+                                    <th>好评数</th>
+                                    <th>获得积分</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ideasTableBody">
+                                <!-- 创意列表将通过JavaScript动态生成 -->
+                            </tbody>
+                        </table>
+                        
+                        <!-- 空状态 -->
+                        <div id="emptyState" class="empty-ideas" style="display: none;">
+                            <div class="icon">💡</div>
+                            <h3>暂无创意</h3>
+                            <p>您还没有提交过创意，立即提交一个新创意开始吧！</p>
+                            <button class="action-btn" onclick="window.location.href='idea-submit.html'">提交创意</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通知容器 -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <script src="../js/common.js"></script>
+    <script>
+        // 页面状态管理
+        const State = {
+            user: null,
+            ideas: [],
+            filteredIdeas: [],
+            filters: {
+                status: 'all',
+                sort: 'date-desc'
+            }
+        };
+
+        // 页面初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initPage();
+        });
+
+        // 初始化页面
+        async function initPage() {
+            try {
+                // 检查用户登录状态
+                State.user = getCurrentUser();
+                if (!State.user) {
+                    window.location.href = '/';
+                    return;
+                }
+                
+                // 更新用户界面
+                updateUserInterface();
+                
+                // 加载我的创意数据
+                await loadMyIdeas();
+                
+            } catch (error) {
+                console.error('页面初始化失败:', error);
+                showNotification('页面加载失败，请刷新重试', 'error');
+            }
+        }
+
+        // 获取当前用户
+        function getCurrentUser() {
+            const userData = localStorage.getItem('userData') || localStorage.getItem('avaCreatorUser');
+            return userData ? JSON.parse(userData) : null;
+        }
+
+        // 更新用户界面
+        function updateUserInterface() {
+            const user = State.user;
+            if (!user) return;
+
+            // 更新用户名显示
+            const usernameEl = document.getElementById('currentUsername');
+            if (usernameEl) {
+                usernameEl.textContent = user.username || user.nickname || '用户';
+            }
+
+            // 更新角色显示
+            const roleEl = document.getElementById('userRole');
+            if (roleEl) {
+                const roleNames = {
+                    'admin': '管理员',
+                    'investor': '投资者',
+                    'product_manager': '产品经理',
+                    'designer': '设计师',
+                    'developer': '开发者'
+                };
+                roleEl.textContent = roleNames[user.role] || '用户';
+            }
+        }
+
+        // 加载我的创意数据
+        async function loadMyIdeas() {
+            try {
+                // 模拟API请求延迟
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                // 模拟获取我的创意数据
+                const myIdeas = getMockMyIdeas();
+                
+                State.ideas = myIdeas;
+                
+                // 应用筛选
+                filterIdeas();
+                
+                // 更新统计数据
+                updateStats();
+                
+            } catch (error) {
+                console.error('加载创意数据失败:', error);
+                showNotification('加载创意数据失败', 'error');
+            }
+        }
+
+        // 获取模拟我的创意数据
+        function getMockMyIdeas() {
+            // 这里应该是从API获取数据，现在使用模拟数据
+            return [
+                {
+                    id: '1',
+                    title: '智能创意推荐系统',
+                    description: '基于用户历史行为和偏好，使用AI算法推荐个性化创意内容，提高用户参与度和创意质量。',
+                    category: 'technology',
+                    status: 'approved',
+                    createdAt: '2024-02-15',
+                    votes: 24,
+                    points: 30,
+                    reviewFeedback: '这是一个非常有价值的创意，可以显著提升平台用户体验。'
+                },
+                {
+                    id: '2',
+                    title: '创意协作白板',
+                    description: '实时多人协作的在线白板工具，支持绘图、思维导图、便签等功能，帮助团队更好地进行创意头脑风暴。',
+                    category: 'product',
+                    status: 'pending',
+                    createdAt: '2024-02-20',
+                    votes: 15,
+                    points: 0
+                },
+                {
+                    id: '3',
+                    title: '创意展示3D画廊',
+                    description: '使用WebGL技术打造3D虚拟画廊，以沉浸式体验展示优秀创意作品，提供更有吸引力的创意浏览方式。',
+                    category: 'ux',
+                    status: 'rejected',
+                    createdAt: '2024-02-05',
+                    votes: 8,
+                    points: 0,
+                    reviewFeedback: '技术实现难度较大，当前阶段不适合投入开发资源。'
+                }
+            ];
+        }
+
+        // 筛选创意
+        function filterIdeas() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
+            
+            State.filters = {
+                status: statusFilter,
+                sort: sortFilter
+            };
+            
+            // 应用状态筛选
+            State.filteredIdeas = State.ideas.filter(idea => {
+                if (statusFilter === 'all') return true;
+                return idea.status === statusFilter;
+            });
+            
+            // 应用排序
+            State.filteredIdeas.sort((a, b) => {
+                switch (sortFilter) {
+                    case 'date-desc':
+                        return new Date(b.createdAt) - new Date(a.createdAt);
+                    case 'date-asc':
+                        return new Date(a.createdAt) - new Date(b.createdAt);
+                    case 'votes-desc':
+                        return b.votes - a.votes;
+                    case 'points-desc':
+                        return b.points - a.points;
+                    default:
+                        return new Date(b.createdAt) - new Date(a.createdAt);
+                }
+            });
+            
+            // 渲染创意列表
+            renderIdeasTable();
+        }
+
+        // 渲染创意表格
+        function renderIdeasTable() {
+            const tableBody = document.getElementById('ideasTableBody');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (!tableBody || !emptyState) return;
+            
+            if (State.filteredIdeas.length === 0) {
+                tableBody.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            
+            const ideasHTML = State.filteredIdeas.map(idea => `
+                <tr>
+                    <td class="idea-title">
+                        <a href="idea-detail.html?id=${idea.id}">${idea.title}</a>
+                    </td>
+                    <td class="idea-date">${formatDate(idea.createdAt)}</td>
+                    <td>
+                        <span class="idea-status status-${idea.status}">${getStatusName(idea.status)}</span>
+                    </td>
+                    <td>${idea.votes}</td>
+                    <td class="idea-points">${idea.points}</td>
+                    <td class="idea-actions">
+                        <button class="idea-btn secondary action-btn" onclick="viewIdea('${idea.id}')">查看</button>
+                        ${idea.status === 'pending' ? 
+                            `<button class="idea-btn secondary action-btn" onclick="editIdea('${idea.id}')">编辑</button>` : ''}
+                    </td>
+                </tr>
+            `).join('');
+            
+            tableBody.innerHTML = ideasHTML;
+        }
+
+        // 更新统计数据
+        function updateStats() {
+            document.getElementById('totalIdeas').textContent = State.ideas.length;
+            
+            const approvedIdeas = State.ideas.filter(idea => idea.status === 'approved').length;
+            document.getElementById('approvedIdeas').textContent = approvedIdeas;
+            
+            const totalPoints = State.ideas.reduce((sum, idea) => sum + (idea.points || 0), 0);
+            document.getElementById('totalPoints').textContent = totalPoints;
+            
+            const totalVotes = State.ideas.reduce((sum, idea) => sum + (idea.votes || 0), 0);
+            document.getElementById('totalVotes').textContent = totalVotes;
+        }
+
+        // 查看创意详情
+        function viewIdea(ideaId) {
+            window.location.href = `idea-detail.html?id=${ideaId}`;
+        }
+
+        // 编辑创意
+        function editIdea(ideaId) {
+            const idea = State.ideas.find(item => item.id === ideaId);
+            if (!idea) {
+                showNotification('创意不存在', 'error');
+                return;
+            }
+            
+            // 如果创意已经被审核，不允许编辑
+            if (idea.status !== 'pending') {
+                showNotification('已审核的创意不能编辑', 'error');
+                return;
+            }
+            
+            // 跳转到编辑页面
+            window.location.href = `idea-edit.html?id=${ideaId}`;
+        }
+
+        // 获取状态名称
+        function getStatusName(status) {
+            const statusNames = {
+                'pending': '待审核',
+                'approved': '已采纳',
+                'rejected': '未采纳'
+            };
+            return statusNames[status] || '未知状态';
+        }
+
+        // 格式化日期
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        }
+
+        // 显示通知
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <span class="notification-icon">${getNotificationIcon(type)}</span>
+                    <span class="notification-message">${message}</span>
+                </div>
+                <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+            `;
+            
+            // 添加到页面
+            const container = document.getElementById('notificationContainer');
+            container.appendChild(notification);
+            
+            // 自动关闭
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.classList.add('fade-out');
+                    setTimeout(() => notification.remove(), 500);
+                }
+            }, 5000);
+        }
+
+        // 获取通知图标
+        function getNotificationIcon(type) {
+            const icons = {
+                'success': '✅',
+                'error': '❌',
+                'info': 'ℹ️'
+            };
+            return icons[type] || 'ℹ️';
+        }
+    </script>
+</body>
+</html>
